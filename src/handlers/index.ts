@@ -118,7 +118,9 @@ export const uploadImage = async (req: Request, res: Response) => {
 export const getUserbyHandle = async (req: Request, res: Response) => {
     try {
         const { handle } = req.params
-        const user = await User.findOne({ handle }).select('-_id -__v -email - password')
+
+        const user = await User.findOne({ handle }).select('-_id -__v -email -password')
+
         if (!user) {
             const error = new Error('El usuario no existe')
             res.status(400).json({ error: error.message })
