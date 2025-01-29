@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { createAcount, getUser, getUserbyHandle, login, updateProfile, uploadImage } from './handlers'
+import { createAcount, getUser, getUserbyHandle, login, searchByHandle, updateProfile, uploadImage } from './handlers'
 import { body } from 'express-validator'
 import { handleImportErrors } from './middellware/validation'
 import { autenticate } from './middellware/auth'
@@ -42,9 +42,9 @@ router.patch('/user',
     body('handle')
         .notEmpty()
         .withMessage('El hndle no puede ir vacio'),
-    body('description')
+    /*body('description')
         .notEmpty()
-        .withMessage('La descripcion no puede ir vacio'),
+        .withMessage('La descripcion no puede ir vacio'),*/
     handleImportErrors,
     autenticate,
     updateProfile
@@ -55,5 +55,13 @@ router.post('/user/image', autenticate, uploadImage)
 
 router.get('/:handle', getUserbyHandle)
 
+router.post('/search',
+    body('handle')
+        .notEmpty()
+        .withMessage('El handle no puede ir vacio'),
+    handleImportErrors,
+    searchByHandle
 
-export default router
+)
+
+export default router 
